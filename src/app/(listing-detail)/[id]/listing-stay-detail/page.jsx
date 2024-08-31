@@ -15,13 +15,13 @@ import ButtonClose from "@/shared/ButtonClose";
 import Input from "@/shared/Input";
 import LikeSaveBtns from "@/components/LikeSaveBtns";
 import Image from "next/image";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { redirect, useParams, usePathname, useRouter } from "next/navigation";
 import { Amenities_demos, PHOTOS } from "./constant";
 import StayDatesRangeInput from "./StayDatesRangeInput";
 import GuestsInput from "./GuestsInput";
 import SectionDateRange from "../../SectionDateRange";
 import { useUser } from "@clerk/nextjs";
-import { fetchLisingsDetails, fetchUserInfo } from "@/actions/server";
+import { CheckAccuntStats, fetchLisingsDetails, fetchUserInfo } from "@/actions/server";
 import toast from "react-hot-toast";
 import { PencilIcon } from "@heroicons/react/24/solid";
 
@@ -539,6 +539,13 @@ const ListingStayDetailPage = ({}) => {
         if(!user){
           router.push('/sign-in')
           return
+        }
+        if(user){
+          const stat = await CheckAccuntStats(user?.id)
+          if(stat == false){
+            router.push('/suspended')
+            return
+          }
         }
         if(!startDate || !endDate || !totalGuests){
           toast.error('select dates please!', {position: "top-right"})

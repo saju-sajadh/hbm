@@ -20,7 +20,7 @@ const BookCard = ({
   bookings,
   session
 }) => {
-  console.log(data)
+  console.log(data, bookings)
   const {
     photos,
     address,
@@ -51,8 +51,17 @@ const BookCard = ({
     return (
       <div className={size === "default" ? "mt-3 space-y-3" : "mt-2 space-y-2"}>
         <div className="space-y-2">
-          <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {title}
+          <span className="text-xs text-neutral-500 dark:text-neutral-400">
+          {session?.role === "owner" 
+          ? 
+          <span>{title}</span>
+           : 
+           <>
+          <span className="line-clamp-1">Checkin: {new Date(bookings.checkin).toLocaleString()}</span>
+          <span className="line-clamp-1">Checkout: {new Date(bookings.checkout).toLocaleString()}</span>
+          </>
+          }
+            
           </span>
           <div className="flex items-center space-x-2">
            
@@ -61,7 +70,7 @@ const BookCard = ({
                 size === "default" ? "text-base" : "text-base"
               }`}
             >
-              <span className="line-clamp-1">{title}</span>
+              {title}
             </h2>
           </div>
           <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-1.5">
@@ -86,7 +95,7 @@ const BookCard = ({
                 />
               </svg>
             )}
-            <span className="">{address}</span>
+            {session?.role === 'owner' ? <span className="text-xs">{address}</span> :  <span className="">no of guests: {bookings.numberofguests}</span>}
           </div>
         </div>
         <div className="w-14 border-b border-neutral-100 dark:border-neutral-800"></div>

@@ -3,6 +3,8 @@
 import { Popover, Transition } from "@headlessui/react";
 import Input from "@/shared/Input";
 import React, { FC, Fragment } from "react";
+import { redirect, useRouter } from "next/navigation";
+
 
 interface Props {
   className?: string;
@@ -10,6 +12,11 @@ interface Props {
 
 const SearchDropdown: FC<Props> = ({ className = "" }) => {
   const inputRef = React.createRef<HTMLInputElement>();
+  const router = useRouter()
+  const search = async (data: FormData) => {
+    const query = data.get('search')
+    redirect(`/listing-stay-map?location=${query}`)
+  }
 
   return (
     <React.Fragment>
@@ -41,10 +48,12 @@ const SearchDropdown: FC<Props> = ({ className = "" }) => {
                   static
                   className="absolute right-0 z-10 top-full w-screen max-w-sm"
                 >
-                  <form action="" method="POST">
+                  <form action={search} method="POST">
                     <Input
                       ref={inputRef}
+                      name="search"
                       rounded="rounded-full"
+                      autoComplete="off"
                       type="search"
                       placeholder="Type and press enter"
                     />

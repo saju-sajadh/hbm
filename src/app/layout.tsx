@@ -11,6 +11,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from 'react-hot-toast';
 
 
+
 type props = {
   children: React.ReactNode;
   params: any;

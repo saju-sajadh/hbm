@@ -21,7 +21,7 @@ function Chatbot() {
       };
       const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
-        systemInstruction: "Your an AI assitant of a jobportal webapp called Workwise. your name is workwise AI. if anyone ask other details than this jobapp or jobs, tell them that you cant assist them with that. Your job is to assist users to explore the website and provide solutions for the technical issues they  may face. your responses should be simple, commprise and understandable. Also assist them with app navigation providing navigation(don't say link) which are http://localhost:3000/, http://localhost:3000/account, http://localhost:3000/jobs(for posting jobs and applying jobs), http://localhost:3000/companies. if someone asked about a specic type of jobs, give them urls like http://localhost:3000/search/the type of job they asked."
+        systemInstruction: "Your an AI assitant of a Hotel booking webapp called Easy bookings. your name is Easybooking Virtual Assistant. if anyone ask other details than this jhotel booking app or hotels, tell them that you cant assist them with that. Your job is to assist users to explore the website and provide solutions for the technical issues they  may face. your responses should be simple, commprise and understandable. Also assist them with app navigation providing navigation(don't say link) which are http://localhost:3000/, http://localhost:3000/account, http://localhost:3000/author(for viewing bookings of users and listings of owners), http://localhost:3000/add-listing. if someone asked about a specific type of hotels or places, give them urls like http://localhost:3000/listing-stay-map?location=place , where place is what they asked."
       });
 
     const chat = async () => {
@@ -41,7 +41,7 @@ function Chatbot() {
         <div>
             <button
                 onClick={() => setShow(!show)}
-                className="fixed bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-full w-16 h-16 bg-black hover:bg-gray-700 m-0 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900"
+                className="fixed bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-full w-16 h-16 bg-[#4f46e5] hover:bg-gray-700 m-0 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900"
                 type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -56,8 +56,8 @@ function Chatbot() {
             }} className={`${!show && 'hidden'} fixed bottom-[calc(4rem+1.5rem)] overflow-y-auto right-0 mr-4 bg-white p-6 rounded-lg border border-[#e5e7eb] w-[440px] h-[634px]`}>
 
                 <div className="flex flex-col space-y-1.5 pb-6">
-                    <h2 className="font-semibold text-lg tracking-tight">AI Assistant</h2>
-                    <p className="text-sm text-[#6b7280] leading-3">Powered by Workwise</p>
+                    <h2 className="font-semibold text-lg tracking-tight">Virtual Assistant</h2>
+                    <p className="text-sm text-[#6b7280] leading-3">Powered by EasyBookings</p>
                 </div>
 
                 <div className="pr-4 h-[474px] overflow-y-auto" style={{ minWidth: '100%', display: 'table' }}>
@@ -79,7 +79,7 @@ function Chatbot() {
                                     }
                                 </div>
                             </span>
-                            <p className="leading-relaxed"><span className="block font-bold text-gray-700">{message.type === 'ai' ? 'Workwise AI' : 'You'}</span> {message.text}</p>
+                            <p className="leading-relaxed"><span className="block font-bold text-gray-700">{message.type === 'ai' ? 'Easy Bookings AI' : 'You'}</span> {message.text}</p>
                         </div>
                     ))}
                 </div>
@@ -89,11 +89,11 @@ function Chatbot() {
                         <input
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            className="flex h-10 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#9ca3af] disabled:cursor-not-allowed disabled:opacity-50 text-[#030712] focus-visible:ring-offset-2"
+                            className="flex h-10 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm placeholder-[#6b7280] focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 text-[#030712] "
                             placeholder="Type your message" />
                         <button
                             type="submit"
-                            className="inline-flex items-center justify-center rounded-md text-sm font-medium text-[#f9fafb] disabled:pointer-events-none disabled:opacity-50 bg-black hover:bg-[#111827E6] h-10 px-4 py-2">
+                            className="inline-flex items-center justify-center rounded-md text-sm font-medium text-[#f9fafb] disabled:pointer-events-none disabled:opacity-50 bg-[#4f46e5] hover:bg-[#111827E6] h-10 px-4 py-2">
                             Send
                         </button>
                     </form>

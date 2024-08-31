@@ -38,22 +38,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
               >
                 {i.name}
               </span>
-              {i.children && (
-                <span
-                  className="flex-1 flex"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <Disclosure.Button
-                    as="span"
-                    className="py-2.5 flex justify-end flex-1"
-                  >
-                    <ChevronDownIcon
-                      className="ml-2 h-4 w-4 text-neutral-500"
-                      aria-hidden="true"
-                    />
-                  </Disclosure.Button>
-                </span>
-              )}
+              
             </Link>
             {i.children && (
               <Disclosure.Panel>{_renderMenuChild(i)}</Disclosure.Panel>
@@ -82,19 +67,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
           >
             {item.name}
           </span>
-          {item.children && (
-            <span className="flex-1 flex" onClick={(e) => e.preventDefault()}>
-              <Disclosure.Button
-                as="span"
-                className="py-2.5 flex items-center justify-end flex-1 "
-              >
-                <ChevronDownIcon
-                  className="ml-2 h-4 w-4 text-neutral-500"
-                  aria-hidden="true"
-                />
-              </Disclosure.Button>
-            </span>
-          )}
+          
         </Link>
         {item.children && (
           <Disclosure.Panel>{_renderMenuChild(item)}</Disclosure.Panel>

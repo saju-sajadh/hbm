@@ -18,7 +18,7 @@ export interface HeaderFilterProps {
 
 const HeaderFilter: FC<HeaderFilterProps> = ({
   tabActive ,
-  tabs = ["Kerala", "Delhi", "Banglore", "Mumbai"],
+  tabs = ["Kerala", "Delhi", "Banglore", "Mumbai", "Kanyakumari"],
   subHeading = "",
   heading = "Latest Articles 🎈",
   onClickTab = () => {},

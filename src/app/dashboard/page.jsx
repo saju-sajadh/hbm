@@ -6,7 +6,7 @@ export default async function UsersPage({ searchParams }) {
   console.log(searchParams - 'identifier')
   const search = searchParams.q ?? '';
   const offset = searchParams.offset ?? 0;
-  const { profiles = [], newOffset= 5, totalProfiles = 4} = await getProfiles(search, Number(offset));
+  const { profiles , newOffset, totalProfiles } = await getProfiles(search, Number(offset));
 
 
 
@@ -17,7 +17,7 @@ export default async function UsersPage({ searchParams }) {
           <TabsTrigger value="all">All</TabsTrigger>
         </TabsList>
       </div>
-      <TabsContent value="all">
+      <TabsContent  value="all">
         <UsersTable profiles={profiles} offset={newOffset ?? 0} totalProfiles={totalProfiles} />
       </TabsContent>
     </Tabs>

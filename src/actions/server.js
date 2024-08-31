@@ -10,8 +10,14 @@ import mongoose from "mongoose"
 import { revalidatePath } from "next/cache"
 
 
-
-const { ObjectId } = mongoose.Types;
+export async function CheckAccuntStats(id) {
+    await Connect()
+    const account = await User.findOne({ userid: id })
+    if (account) {
+      return account.active
+    }
+    return false
+  }
 
 
 
@@ -189,3 +195,17 @@ export const createOrupdateUser = async (name, bio, address, dateOfbirth, contac
 
     return JSON.parse(JSON.stringify(places))
  }
+
+ export async function suspendAccounts(identifier, repath) {
+    await Connect()
+    await User.findOneAndUpdate({ userid: identifier }, { active: false })
+    revalidatePath(repath)
+  }
+  
+  //enable account
+  
+  export async function EnableAccounts(identifier, repath) {
+    await Connect()
+    await User.findOneAndUpdate({ userid: identifier }, { active: true })
+    revalidatePath(repath)
+  }

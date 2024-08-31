@@ -11,6 +11,7 @@ import MenuBar from "@/shared/MenuBar";
 import isInViewport from "@/utils/isInViewport";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 let WIN_PREV_POSITION = 0;
 if (typeof window !== "undefined") {
@@ -23,32 +24,29 @@ interface NavItem {
   icon: any;
 }
 
-const NAV: NavItem[] = [
-  {
-    name: "Explore",
-    link: "/",
-    icon: MagnifyingGlassIcon,
-  },
-  {
-    name: "Wishlists",
-    link: "/account-savelists",
-    icon: HeartIcon,
-  },
-  {
-    name: "Log in",
-    link: "/account",
-    icon: UserCircleIcon,
-  },
-  {
-    name: "Menu",
-    icon: MenuBar,
-  },
-];
+
 
 const FooterNav = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const { user } = useUser()
   const pathname = usePathname();
+
+  const NAV: NavItem[] = [
+    {
+      name: "Explore",
+      link: "/",
+      icon: MagnifyingGlassIcon,
+    },
+    {
+      name: user ? "Account" : "Log in",
+      link: "/account",
+      icon: UserCircleIcon,
+    },
+    {
+      name: "Menu",
+      icon: MenuBar,
+    },
+  ];
 
   useEffect(() => {
     if (typeof window !== "undefined") {

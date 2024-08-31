@@ -11,6 +11,7 @@ import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import SectionBecomeAnAuthor from "@/components/SectionBecomeAnAuthor";
 import SectionVideos from "@/components/SectionVideos";
 import SectionClientSay from "@/components/SectionClientSay";
+import Chatbot from '@/components/chatbot'
 
 
 
@@ -54,6 +55,9 @@ function PageHome() {
           <BackgroundSection />
           <SectionClientSay />
         </div>
+        <div className="flex fixed justify-end items-center z-50">
+        <Chatbot/>
+      </div>
       </div>
     </main>
   );

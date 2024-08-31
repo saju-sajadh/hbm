@@ -60,13 +60,12 @@ export function UsersTable({ profiles, offset, totalProfiles }) {
           </TableHeader>
           <TableBody>
             {profiles.map((profile) => (
-              <TableRow key={profile?.userId}>
-                <TableCell>{profile?.role === 'candidate' ? profile.candidateInfo?.name : profile.recruiterInfo?.name}</TableCell>
-                <TableCell>{profile?.email}</TableCell>
+              <TableRow key={profile?.userid}>
+                <TableCell>{profile?.name}</TableCell>
+                <TableCell>{profile?.email ? profile?.email : profile?.userid}</TableCell>
                 <TableCell>{profile?.role}</TableCell>
                 <TableCell>{profile?.active === true ? 'Active' : 'Suspended'}</TableCell>
                 <TableCell>
-                  {/* Add actions here if needed */}
                 </TableCell>
               </TableRow>
             ))}

@@ -19,10 +19,11 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
   const [places, setPlaces] = useState<any[]>([]); 
 
 
+
   useEffect(()=>{
     async function fetchUserAndBookings(){
       try {
-        const session = await fetchUserInfo(user?.id)
+        const session: any = await fetchUserInfo(user?.id)
         setSession(session)
         if(session && session.role === "owner"){
           const listings = await getAllListings(user?.id)

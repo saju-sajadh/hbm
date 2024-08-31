@@ -80,8 +80,18 @@ export default function Addplace(){
                     maxguest,
                     price,
                 };
+
+                const formData = new FormData()
+                formData.append('hotel_name', title)
+                formData.append('address', address)
+                formData.append('lat', (Math.random() * (80 - 40) + 40).toFixed(2))
+                formData.append('lng', (Math.random() * (80 - 40) + 40).toFixed(2))
                 
                 // Call the server-side function
+                const res = await fetch('/api/list_hotel', {
+                    method: 'POST',
+                    body: formData,
+                })
                 const result = await addNewPlaceorUpdate(placeData);
                 if(result) {
                      toast.success('Place added successfully', {position: 'top-right'}) 

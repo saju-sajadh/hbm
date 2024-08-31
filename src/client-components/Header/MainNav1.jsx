@@ -6,7 +6,6 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import MenuBar from "@/shared/MenuBar";
 import SwitchDarkMode from "@/shared/SwitchDarkMode";
 import HeroSearchForm2MobileFactory from "../(HeroSearchForm2Mobile)/HeroSearchForm2MobileFactory";
-import LangDropdown from "./LangDropdown";
 import { useUser } from "@clerk/nextjs";
 import AvatarDropdown from "./AvatarDropdown";
 import { usePathname } from "next/navigation";
@@ -19,6 +18,10 @@ const MainNav1 =  ({ className = "" }) => {
 
  const {user} = useUser()
  const pathname = usePathname()
+
+ if(pathname.startsWith('/dashboard')){
+  return
+}
  
 
 

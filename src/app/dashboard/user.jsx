@@ -10,6 +10,8 @@ import {
   DropdownMenuTrigger
 } from '../../components/ui/dropdown-menu';
 import Link from 'next/link';
+import { LogoutOutlined } from '@ant-design/icons';
+import { SignOutButton } from '@clerk/nextjs';
 
 export async function User() {
   
@@ -23,7 +25,7 @@ export async function User() {
           className="overflow-hidden rounded-full"
         >
           <Image
-            src={false?.image ?? '/placeholder-user.jpg'}
+            src='/user.png'
             width={36}
             height={36}
             alt="Avatar"
@@ -31,25 +33,11 @@ export async function User() {
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        {true ? (
+      <DropdownMenuContent align="end">  
           <DropdownMenuItem>
-            <form
-              
-            >
-              <button type="submit">Sign Out</button>
-            </form>
-          </DropdownMenuItem>
-        ) : (
-          <DropdownMenuItem>
-            <Link href="/login">Sign In</Link>
-          </DropdownMenuItem>
-        )}
+
+          <SignOutButton><Link href={'/'}>Sign out</Link></SignOutButton>
+              </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

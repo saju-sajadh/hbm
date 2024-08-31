@@ -76,6 +76,7 @@ const StayDatesRangeInput = ({ className = "flex-1", startDate, endDate, onDates
                   startDate={startDate}
                   endDate={endDate}
                   selectsRange
+                  minDate={new Date()}
                   monthsShown={2}
                   showPopperArrow={false}
                   inline

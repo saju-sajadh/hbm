@@ -1,46 +1,45 @@
-// import mongoose from 'mongoose';
-// import Profile from '@/models/profile'; // Assuming the Profile model is in this path
-// import connectToDB from '@/database';
-// import Job from '@/models/job';
+import mongoose from 'mongoose';
+import User from '@/dbmodels/usermodel'; // Assuming the Profile model is in this path
+import Connect from '@/dbconfig/connect';
 
-// mongoose.connect(process.env.MONGODB_URL, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 export async function getProfiles(search, offset = 0) {
-  // const query = search
-  //   ? { $or: [{ 'candidateInfo.name': { $regex: search, $options: 'i' } }, { email: { $regex: search, $options: 'i' } }] }
-  //   : {};
+  const query = search
+    ? { $or: [{ name: { $regex: search, $options: 'i' } }, { email: { $regex: search, $options: 'i' } }] }
+    : {};
 
-  // const profiles = await Profile.find(query).skip(offset).limit(5).exec();
-  // const totalProfiles = await Profile.countDocuments(query).exec();
+  const profiles = await User.find(query).skip(offset).limit(5).exec();
+  const totalProfiles = await User.countDocuments(query).exec();
 
-  // const newOffset = profiles.length >= 5 ? offset + 5 : null;
+  const newOffset = profiles.length >= 5 ? offset + 5 : null;
 
-  // return {
-  //   profiles,
-  //   newOffset,
-  //   totalProfiles,
-  // };
+  return {
+    profiles,
+    newOffset,
+    totalProfiles,
+  };
 }
 
-export async function getRecruiters(search, offset = 0) {
-  // await connectToDB();
+export async function getOwners(search, offset = 0) {
+  await Connect();
 
-  // const query = search
+  const query = search
    
 
-  // // Fetch recruiters based on the query with pagination
-  // const recruiters = await Profile.find(query).skip(offset).limit(5).exec();
-  // const totalRecruiters = await Profile.countDocuments(query).exec();
+  // Fetch recruiters based on the query with pagination
+  const owners = await User.find(query).skip(offset).limit(5).exec();
+  const totalOwners = await User.countDocuments(query).exec();
 
-  // // Calculate the new offset
-  // const newOffset = recruiters.length >= 5 ? offset + 5 : null;
+  // Calculate the new offset
+  const newOffset = owners.length >= 5 ? offset + 5 : null;
 
-  // return {
-  //   recruiters,
-  //   newOffset,
-  //   totalRecruiters,
-  // };
+  return {
+    owners,
+    newOffset,
+    totalOwners,
+  };
 }

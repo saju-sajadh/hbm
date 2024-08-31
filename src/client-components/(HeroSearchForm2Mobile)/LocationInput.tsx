@@ -1,6 +1,8 @@
 "use client";
 
+import ButtonPrimary from "@/shared/ButtonPrimary";
 import { MapPinIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState, useEffect, useRef, FC } from "react";
 
 interface Props {
@@ -20,6 +22,7 @@ const LocationInput: FC<Props> = ({
   const [value, setValue] = useState("");
   const containerRef = useRef(null);
   const inputRef = useRef(null);
+  const router = useRouter()
 
   useEffect(() => {
     setValue(defaultValue);
@@ -43,7 +46,7 @@ const LocationInput: FC<Props> = ({
     return (
       <>
         <p className="block font-semibold text-base">
-          {heading || "Destinations"}
+          {heading }
         </p>
         <div className="mt-3">
           {items.map((item) => {
@@ -63,9 +66,21 @@ const LocationInput: FC<Props> = ({
     );
   };
 
+  const search = async ( data: FormData) => {
+    const query = data.get('search')
+    console.log(query)
+    if(query){
+    router.push(`/listing-stay-map?location=${query}`)
+    }
+  }
+
   return (
     <div className={`${className}`} ref={containerRef}>
-      <div className="p-5">
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        search(formData);
+      }} className="p-5">
         <span className="block font-semibold text-xl sm:text-2xl">
           {headingText}
         </span>
@@ -74,37 +89,34 @@ const LocationInput: FC<Props> = ({
             className={`block w-full bg-transparent border px-4 py-3 pr-12 border-neutral-900 dark:border-neutral-200 rounded-xl focus:ring-0 focus:outline-none text-base leading-none placeholder-neutral-500 dark:placeholder-neutral-300 truncate font-bold placeholder:truncate`}
             placeholder={"Search destinations"}
             value={value}
+            name="search"
             onChange={(e) => setValue(e.currentTarget.value)}
             ref={inputRef}
           />
+          
           <span className="absolute right-2.5 top-1/2 -translate-y-1/2">
             <MagnifyingGlassIcon className="w-5 h-5 text-neutral-700 dark:text-neutral-400" />
           </span>
         </div>
+        <div className="mt-2 flex w-full justify-center">
+          <ButtonPrimary type="submit" className="rounded-md">Search</ButtonPrimary>
+        </div>
         <div className="mt-7">
           {value
             ? renderSearchValues({
-                heading: "Locations",
+                heading: "",
                 items: [
-                  "Afghanistan",
-                  "Albania",
-                  "Algeria",
-                  "American Samao",
-                  "Andorra",
+                 
                 ],
               })
             : renderSearchValues({
-                heading: "Popular destinations",
+                heading: "",
                 items: [
-                  "Australia",
-                  "Canada",
-                  "Germany",
-                  "United Kingdom",
-                  "United Arab Emirates",
+                  
                 ],
               })}
         </div>
-      </div>
+      </form>
     </div>
   );
 };

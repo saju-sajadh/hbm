@@ -7,9 +7,10 @@ import Input from "@/shared/Input";
 import Select from "@/shared/Select";
 import Textarea from "@/shared/Textarea";
 import { useUser } from "@clerk/nextjs";
-import {createOrupdateUser, fetchUserInfo} from '@/actions/server'
+import {CheckAccuntStats, createOrupdateUser, fetchUserInfo} from '@/actions/server'
 import { LoadingOutlined } from '@ant-design/icons';
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 
 const AccountPage = () => {
@@ -24,6 +25,7 @@ const AccountPage = () => {
   const [bio, setBio] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   useEffect(()=>{
      async function fetchUser(){
@@ -46,6 +48,13 @@ const AccountPage = () => {
   const handleData = async (formdata) => {
     try {
       setLoading(true)
+      if(user){
+        const stats = await CheckAccuntStats(user?.id)
+        if(stats == false){
+          router.push('/suspended')
+          return
+        }
+      }
       const name = formdata.get("name");
       const bio = formdata.get("bio");
       const address = formdata.get("address");
