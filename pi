@@ -1,0 +1,51 @@
+import sys
+import cv2
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel
+from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtCore import Qt, QTimer
+
+class VideoCapture(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.cam = cv2.VideoCapture(0)
+        self.frame_width = int(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH))
+        self.frame_height = int(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        # Define the codec and create VideoWriter object
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        self.out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (self.frame_width, self.frame_height))
+
+        self.label = QLabel(self)
+        self.label.setAlignment(Qt.AlignCenter)
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_frame)
+        self.timer.start(30)  # Update every 30ms
+
+        self.setWindowTitle('Camera')
+        self.setGeometry(100, 100, self.frame_width, self.frame_height)
+        self.show()
+
+    def update_frame(self):
+        ret, frame = self.cam.read()
+        if ret:
+            self.out.write(frame)  # Write the frame to the output file
+
+            # Convert the frame to RGB for PyQt
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            height, width, channel = frame.shape
+            bytes_per_line = 3 * width
+            q_image = QImage(frame.data, width, height, bytes_per_line, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(q_image)
+            self.label.setPixmap(pixmap)
+
+    def closeEvent(self, event):
+        self.cam.release()
+        self.out.release()
+        event.accept()
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = VideoCapture()
+    sys.exit(app.exec_())
