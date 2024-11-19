@@ -1,0 +1,28 @@
+pip install picamera2
+sudo cp -r /usr/lib/python3/dist-packages/libcamera ~/miniconda3/envs/yolov8_picam/lib/python3.11/site-packages/
+sudo cp -r /usr/lib/python3/dist-packages/pykms ~/miniconda3/envs/yolov8_picam/lib/python3.11/site-packages/
+
+cd ~/miniconda3/envs/yolov8_picam/lib
+mv -vf libstdc++.so.6 libstdc++.so.6.old
+ln -s /usr/lib/x86_64-linux-gnu/libstdc++.so.6 ./libstdc++.so.6
+Now install QT5
+
+conda install pyqt
+pip uninstall opencv-python
+pip install opencv-python-headless==4.6.0.66
+Export yolov8n to tflite and onnx format
+python export_models.py
+python export_models.py --format onnx
+Note, It seems like there is a bug when I export tflite and onnx at the same time. So for now export them separately.
+
+Run
+Set utf8 format for python if you are getting strange error with latin1 encoding
+
+export PYTHONUTF8=1 
+Run yolov8n.pt
+--debug option show debug window with annotation, good for debugging but slows down the fps
+
+python main_picam.py --debug
+Run exported models
+python main_picam --model=./models/yolov8n.onnx --debug
+python main_picam --model=./models/yolov8n_saved_model/yolov8n_integer_quant.tflite
